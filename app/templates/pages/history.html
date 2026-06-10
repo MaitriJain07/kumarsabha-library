@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}इतिहास — कुमारसभा पुस्तकालय{% endblock %}
+
+{% block content %}
+<div class="container py-4 content-page">
+  <h1>इतिहास</h1>
+
+  <p>
+    श्री बड़ाबाजार कुमारसभा पुस्तकालय की स्थापना <strong>1918</strong> में कोलकाता के बड़ाबाजार
+    क्षेत्र में हुई। शताब्दी से अधिक की यात्रा में संस्था ने साहित्य, संस्कृति और राष्ट्रीय चेतना के
+    संवर्धन में महत्वपूर्ण भूमिका निभाई है।
+  </p>
+
+  <h2>मुख्य मील के पत्थर</h2>
+  <ul class="timeline list-unstyled">
+    <li class="mb-3"><strong>1918</strong> — पुस्तकालय की स्थापना, वाचनालय का प्रारंभ</li>
+    <li class="mb-3"><strong>मध्य शताब्दी</strong> — साहित्यिक गोष्ठियाँ एवं व्याख्यानमाला का विस्तार</li>
+    <li class="mb-3"><strong>1980s–2000s</strong> — विवेकानन्द सेवा सम्मान, हेडगेवार प्रज्ञा सम्मान की स्थापना</li>
+    <li class="mb-3"><strong>वर्तमान</strong> — 30+ प्रकाशन, राष्ट्रीय शिखर प्रतिभा सम्मान, डिजिटल सूचीकरण</li>
+  </ul>
+
+  <h2>पूर्व अध्यक्ष / सचिव (चयनित)</h2>
+  <div class="table-responsive">
+    <table class="table table-bordered committee-table">
+      <thead>
+        <tr><th>कालावधि</th><th>पद</th><th>नाम</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>—</td><td>अध्यक्ष</td><td>डॉ. प्रेमशंकर त्रिपाठी</td></tr>
+        <tr><td>—</td><td>सचिव</td><td>डॉ. ऋषिकेश राय</td></tr>
+        <tr><td colspan="3" class="text-muted small">
+          पूर्ण सूची के लिए <a href="{{ url_for('main.executive_committee') }}">कार्यकारिणी समिति</a> पृष्ठ देखें।
+          विस्तृत ऐतिहासिक तालिकाएँ मूल साइट से अनुकूलित की जा सकती हैं।
+        </td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

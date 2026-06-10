@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}हमारे प्रकाशन — कुमारसभा पुस्तकालय{% endblock %}
+
+{% block content %}
+<div class="container py-4 content-page">
+  <h1>हमारे प्रकाशन</h1>
+  <p>कुमारसभा द्वारा प्रकाशित 30 से अधिक ग्रंथ — नीचे प्रतिनिधि सूची। PDF लिंक जहाँ उपलब्ध हों।</p>
+
+  <div class="list-group">
+    {% set pubs = [
+      ("गीता-परिक्रमा (खंड 1–3)", "विश्नुकांत शास्त्री", ""),
+      ("विवेकानन्द: जीवन और विचार", "विश्नुकांत शास्त्री", ""),
+      ("कुमारसभा वार्षिकी", "संपादक मंडल", ""),
+      ("साहित्यिक गोष्ठी संकलन", "विविध", ""),
+      ("डॉ. हेडगेवार प्रज्ञा सम्मान स्मृति ग्रंथ", "संपादक मंडल", ""),
+    ] %}
+    {% for title, author, pdf in pubs %}
+    <div class="list-group-item d-flex justify-content-between align-items-start flex-wrap gap-2">
+      <div>
+        <h6 class="mb-1">{{ title }}</h6>
+        <small class="text-muted">{{ author }}</small>
+      </div>
+      {% if pdf %}
+      <a href="{{ pdf }}" class="btn btn-sm btn-outline-primary" target="_blank" rel="noopener">PDF</a>
+      {% else %}
+      <span class="badge bg-secondary">सूची में</span>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+
+  <p class="mt-4 small text-muted">
+    पूर्ण प्रकाशन सूची और डाउनलोड लिंक:
+    <a href="https://kumarsabha.com/hamare-prakashan/" target="_blank" rel="noopener">मूल साइट — हमारे प्रकाशन</a>
+  </p>
+</div>
+{% endblock %}

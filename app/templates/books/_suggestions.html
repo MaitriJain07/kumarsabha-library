@@ -1,0 +1,6 @@
+{% for title in suggestions %}
+<button type="button" class="list-group-item list-group-item-action small"
+        onclick="document.getElementById('search').value='{{ title|e }}'; htmx.trigger('#book-filters', 'input');">
+  {{ title }}
+</button>
+{% endfor %}

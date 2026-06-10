@@ -1,0 +1,45 @@
+<form id="book-filters"
+      hx-get="{{ url_for('books.filter_fragment') }}"
+      hx-target="#book-list"
+      hx-swap="innerHTML"
+      hx-trigger="input changed delay:300ms from:input, change from:select"
+      hx-indicator="#search-spinner">
+
+  <div class="row g-3 align-items-end mb-4">
+    <div class="col-md-4">
+      <label class="form-label" for="search">खोजें (शीर्षक / लेखक)</label>
+      <input type="search" class="form-control" id="search" name="search"
+             value="{{ filters.get('search', '') }}"
+             placeholder="उदा. राम, प्रेमचंद"
+             hx-get="{{ url_for('books.search_suggestions') }}"
+             hx-trigger="keyup changed delay:400ms"
+             hx-target="#search-suggestions"
+             hx-swap="innerHTML">
+      <div id="search-suggestions" class="list-group position-absolute z-3" style="max-width:320px;"></div>
+    </div>
+    <div class="col-md-3">
+      <label class="form-label" for="category">विषय / श्रेणी</label>
+      <select class="form-select" id="category" name="category">
+        <option value="">सभी श्रेणियाँ</option>
+        {% for cat in categories %}
+        <option value="{{ cat.id }}" {% if filters.get('category')|string == cat.id|string %}selected{% endif %}>
+          {{ cat.name }}
+        </option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-2">
+      <label class="form-label" for="year_min">वर्ष (से)</label>
+      <input type="number" class="form-control" id="year_min" name="year_min"
+             value="{{ filters.get('year_min', '') }}" placeholder="1900" min="1000" max="2100">
+    </div>
+    <div class="col-md-2">
+      <label class="form-label" for="year_max">वर्ष (तक)</label>
+      <input type="number" class="form-control" id="year_max" name="year_max"
+             value="{{ filters.get('year_max', '') }}" placeholder="2026" min="1000" max="2100">
+    </div>
+    <div class="col-md-1">
+      <span id="search-spinner" class="htmx-indicator spinner-border spinner-border-sm text-primary"></span>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}{{ book.title }} — कुमारसभा पुस्तकालय{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{{ url_for('books.catalogue') }}">पुस्तक सूची</a></li>
+      <li class="breadcrumb-item active">{{ book.title }}</li>
+    </ol>
+  </nav>
+
+  <div class="row">
+    <div class="col-md-4 mb-4">
+      {% if book.cover_image_url %}
+      <img src="{{ book.cover_image_url }}" class="img-fluid rounded shadow" alt="{{ book.title }}">
+      {% else %}
+      <div class="book-cover-placeholder rounded" style="height:320px;">📖</div>
+      {% endif %}
+    </div>
+    <div class="col-md-8">
+      {% if book.is_rare %}<span class="badge bg-warning text-dark mb-2">दुर्लभ</span>{% endif %}
+      <h1>{{ book.title }}</h1>
+      {% if book.subtitle %}<p class="lead text-muted">{{ book.subtitle }}</p>{% endif %}
+      <dl class="row">
+        <dt class="col-sm-3">लेखक</dt>
+        <dd class="col-sm-9">{{ book.author }}</dd>
+        {% if book.year %}
+        <dt class="col-sm-3">प्रकाशन वर्ष</dt>
+        <dd class="col-sm-9">{{ book.year }}</dd>
+        {% endif %}
+        <dt class="col-sm-3">श्रेणी</dt>
+        <dd class="col-sm-9">{{ book.category.name }}</dd>
+        {% if book.tag_list %}
+        <dt class="col-sm-3">टैग</dt>
+        <dd class="col-sm-9">
+          {% for tag in book.tag_list %}
+          <span class="badge bg-light text-dark border me-1">{{ tag }}</span>
+          {% endfor %}
+        </dd>
+        {% endif %}
+      </dl>
+      {% if book.description %}
+      <h5>विवरण</h5>
+      <p>{{ book.description }}</p>
+      {% endif %}
+      {% if book.pdf_preview_url %}
+      <a href="{{ book.pdf_preview_url }}" class="btn btn-primary" target="_blank" rel="noopener">
+        PDF पूर्वावलोकन / डाउनलोड
+      </a>
+      {% endif %}
+    </div>
+  </div>
+
+  {% if related_books %}
+  <hr class="my-5">
+  <h3>संबंधित पुस्तकें</h3>
+  <div class="row mt-3">
+    {% for related in related_books %}
+      {% with book=related %}
+        {% include "books/_book_card.html" %}
+      {% endwith %}
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero-section py-5 mb-4">
+  <div class="container text-center">
+    <h1 class="display-6 fw-bold">श्री बड़ाबाजार कुमारसभा पुस्तकालय</h1>
+    <p class="lead col-lg-10 mx-auto mt-3">
+      1918 ई. में कोलकाता में स्थापित — राष्ट्रीय साहित्यिक एवं सांस्कृतिक विरासत को आगे बढ़ाने वाली
+      शैक्षणिक संस्था। सुसंपन्न वाचनालय, 30+ प्रकाशन, और अखिल भारतीय सम्मानों से विभूषित।
+    </p>
+    <div class="d-flex flex-wrap gap-2 justify-content-center mt-4">
+      <a href="{{ url_for('books.catalogue') }}" class="btn btn-light btn-lg">पुस्तक सूची देखें</a>
+      <a href="{{ url_for('main.introduction') }}" class="btn btn-outline-light btn-lg">हमारा परिचय</a>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+  <div class="row g-4 mb-5">
+    <div class="col-md-4">
+      <div class="card h-100 border-0 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">📚 पुस्तकालय</h5>
+          <p class="card-text small">खोज योग्य डिजिटल सूची — शीर्षक, लेखक, वर्ष और विषय से फ़िल्टर करें।</p>
+          <a href="{{ url_for('books.catalogue') }}" class="btn btn-sm btn-primary">खोजें</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card h-100 border-0 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">🏆 सम्मान एवं गतिविधियाँ</h5>
+          <p class="card-text small">विवेकानन्द सेवा सम्मान, हेडगेवार प्रज्ञा सम्मान, व्याख्यानमाला।</p>
+          <a href="{{ url_for('main.activities') }}" class="btn btn-sm btn-primary">और जानें</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card h-100 border-0 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">📖 प्रकाशन</h5>
+          <p class="card-text small">30 से अधिक प्रकाशन — डाउनलोड और विवरण उपलब्ध।</p>
+          <a href="{{ url_for('main.publications') }}" class="btn btn-sm btn-primary">प्रकाशन सूची</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="mb-5">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2 class="h4 mb-0">नवीन / चयनित पुस्तकें</h2>
+      <a href="{{ url_for('books.catalogue') }}">सभी देखें →</a>
+    </div>
+    <div class="row">
+      {% for book in featured_books %}
+        {% include "books/_book_card.html" %}
+      {% else %}
+        <p class="text-muted">अभी कोई पुस्तक दर्ज नहीं है। प्रशासक पैनल से जोड़ें।</p>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="mb-5">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2 class="h4 mb-0">दुर्लभ पुस्तकें</h2>
+      <a href="{{ url_for('books.rare_books') }}">सभी दुर्लभ →</a>
+    </div>
+    <div class="row">
+      {% for book in rare_books %}
+        {% include "books/_book_card.html" %}
+      {% endfor %}
+    </div>
+  </section>
+
+  <section class="alert alert-light border mb-5" x-data="{ open: false }">
+    <h2 class="h5">आगामी कार्यक्रम</h2>
+    <ul class="mb-0">
+      <li>विवेकानन्द सेवा सम्मान 2021</li>
+      <li>डॉ. अरुण प्रकाश अवस्थी स्मृति आयोजन २०२०</li>
+    </ul>
+    <button class="btn btn-link btn-sm p-0 mt-2" @click="open = !open" x-text="open ? 'कम देखें' : 'और जानकारी'"></button>
+    <p class="small text-muted mt-2" x-show="open" x-cloak>
+      कार्यक्रम विवरण प्रशासक द्वारा अपडेट किए जा सकते हैं। विवरण के लिए
+      <a href="{{ url_for('main.contact') }}">सम्पर्क</a> करें।
+    </p>
+  </section>
+</div>
+{% endblock %}

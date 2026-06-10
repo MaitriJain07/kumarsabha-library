@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}सम्पर्क सूत्र — कुमारसभा पुस्तकालय{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <h1>सम्पर्क सूत्र</h1>
+  <div class="row g-4">
+    <div class="col-lg-5">
+      <address class="mb-4">
+        <strong>श्री बड़ाबाजार कुमारसभा पुस्तकालय</strong><br>
+        बड़ाबाजार, कोलकाता<br>
+        पश्चिम बंगाल, भारत
+      </address>
+      <p><strong>फ़ोन:</strong> (मूल साइट से अपडेट करें)</p>
+      <p><strong>ईमेल:</strong> library@kumarsabha.com</p>
+
+      <div class="ratio ratio-4x3 rounded overflow-hidden shadow-sm">
+        <iframe
+          title="Kumar Sabha Library Map"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3680.0!2d88.35!3d22.58!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjLCsDM0JzQ4LjAiTiA4OMKwMjEnMDAuMCJF!5e0!3m2!1sen!2sin!4v1"
+          style="border:0;" allowfullscreen loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+    <div class="col-lg-7">
+      <h2 class="h5">संदेश भेजें</h2>
+      <form method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <div class="mb-3">
+          {{ form.name.label(class="form-label") }}
+          {{ form.name(class="form-control" + (" is-invalid" if form.name.errors else "")) }}
+          {% for e in form.name.errors %}<div class="invalid-feedback">{{ e }}</div>{% endfor %}
+        </div>
+        <div class="mb-3">
+          {{ form.email.label(class="form-label") }}
+          {{ form.email(class="form-control" + (" is-invalid" if form.email.errors else "")) }}
+          {% for e in form.email.errors %}<div class="invalid-feedback">{{ e }}</div>{% endfor %}
+        </div>
+        <div class="mb-3">
+          {{ form.message.label(class="form-label") }}
+          {{ form.message(class="form-control", rows=5) }}
+        </div>
+        <button type="submit" class="btn btn-primary">भेजें</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

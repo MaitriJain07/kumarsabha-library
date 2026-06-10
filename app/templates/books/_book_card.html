@@ -1,0 +1,20 @@
+<div class="col-sm-6 col-md-4 col-lg-3 mb-4">
+  <a href="{{ url_for('books.detail', book_id=book.id) }}" class="text-decoration-none text-dark">
+    <div class="card book-card position-relative h-100">
+      {% if book.is_rare %}
+      <span class="badge bg-warning text-dark badge-rare">दुर्लभ</span>
+      {% endif %}
+      {% if book.cover_image_url %}
+      <img src="{{ book.cover_image_url }}" class="card-img-top" alt="{{ book.title }}" style="height:180px;object-fit:cover;">
+      {% else %}
+      <div class="book-cover-placeholder">📖</div>
+      {% endif %}
+      <div class="card-body">
+        <h6 class="card-title mb-1">{{ book.title }}</h6>
+        <p class="card-text small text-muted mb-0">{{ book.author }}</p>
+        {% if book.year %}<p class="card-text small text-muted">{{ book.year }}</p>{% endif %}
+        {% if book.category %}<span class="badge bg-secondary-subtle text-secondary">{{ book.category.name }}</span>{% endif %}
+      </div>
+    </div>
+  </a>
+</div>

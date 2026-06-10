@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}दुर्लभ पुस्तकें — कुमारसभा पुस्तकालय{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <h1 class="mb-2">दुर्लभ पुस्तकें</h1>
+  <p class="text-muted mb-4">पुस्तकालय की विशेष संग्रहित दुर्लभ प्रतियाँ</p>
+  {% include "books/_book_grid.html" %}
+</div>
+{% endblock %}

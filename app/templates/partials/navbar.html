@@ -1,0 +1,42 @@
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: var(--ks-primary);">
+  <div class="container">
+    <a class="navbar-brand" href="{{ url_for('main.index') }}">
+      श्री बड़ाबाजार कुमारसभा पुस्तकालय
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">परिचय</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{{ url_for('main.introduction') }}">हमारा परिचय</a></li>
+            <li><a class="dropdown-item" href="{{ url_for('main.history') }}">इतिहास</a></li>
+            <li><a class="dropdown-item" href="{{ url_for('main.executive_committee') }}">कार्यकारिणी समिति</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">पुस्तकें</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{{ url_for('books.catalogue') }}">पुस्तक सूची</a></li>
+            <li><a class="dropdown-item" href="{{ url_for('books.rare_books') }}">दुर्लभ पुस्तकें</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">गतिविधियाँ</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{{ url_for('main.activities') }}">साहित्यिक-सांस्कृतिक</a></li>
+            <li><a class="dropdown-item" href="{{ url_for('main.photo_gallery') }}">चित्रमय कुमारसभा</a></li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('main.publications') }}">प्रकाशन</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('main.contact') }}">सम्पर्क</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

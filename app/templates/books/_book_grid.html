@@ -1,0 +1,11 @@
+<div class="row">
+  {% if books %}
+    {% for book in books %}
+      {% include "books/_book_card.html" %}
+    {% endfor %}
+  {% else %}
+    <div class="col-12">
+      <p class="text-muted text-center py-5">कोई पुस्तक नहीं मिली। कृपया खोज या फ़िल्टर बदलें।</p>
+    </div>
+  {% endif %}
+</div>

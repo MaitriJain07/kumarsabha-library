@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}चित्रमय कुमारसभा — कुमारसभा पुस्तकालय{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="container py-4" x-data>
+  <h1>चित्रमय कुमारसभा</h1>
+  <p class="text-muted mb-4">कार्यक्रमों और पुस्तकालय की झलकियाँ — छवि पर क्लिक कर बड़ा देखें।</p>
+
+  <div class="row g-3">
+    {% set images = [
+      ("https://kumarsabha.com/wp-content/uploads/2021/03/Kumarsabha-Photo-21.3.21.jpg", "विश्व कविता दिवस 2021"),
+      ("https://kumarsabha.com/wp-content/uploads/2019/12/cropped-WhatsApp-Image-2019-12-10-at-4.34.17-PM-192x192.jpeg", "कुमारसभा"),
+    ] %}
+    {% for url, caption in images %}
+    <div class="col-sm-6 col-md-4 gallery-thumb">
+      <a href="{{ url }}" class="glightbox" data-gallery="kumarsabha" data-title="{{ caption }}">
+        <img src="{{ url }}" alt="{{ caption }}" class="img-fluid rounded shadow-sm" loading="lazy">
+        <p class="small mt-1 text-center">{{ caption }}</p>
+      </a>
+    </div>
+    {% endfor %}
+  </div>
+  <p class="small text-muted mt-4">
+    अधिक चित्र मूल साइट (<a href="https://kumarsabha.com/photo-gallery/" target="_blank" rel="noopener">photo-gallery</a>)
+    से आयात किए जा सकते हैं।
+  </p>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
+<script>const lightbox = GLightbox({ selector: '.glightbox' });</script>
+{% endblock %}
