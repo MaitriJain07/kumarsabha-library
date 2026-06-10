@@ -1,23 +1,16 @@
 from datetime import datetime
-
 from app.extensions import db
-
-
 class Category(db.Model):
     __tablename__ = "category"
-
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False, unique=True)
     slug = db.Column(db.String(50), nullable=False, unique=True)
     books = db.relationship("Book", back_populates="category", lazy="dynamic")
-
     def __str__(self):
         return self.name
 
-
 class Book(db.Model):
     __tablename__ = "book"
-
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(200), nullable=False)
     subtitle = db.Column(db.String(200))
@@ -30,7 +23,6 @@ class Book(db.Model):
     cover_image_url = db.Column(db.String(300))
     pdf_preview_url = db.Column(db.String(300))
     created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
-
     category = db.relationship("Category", back_populates="books")
 
     @property
@@ -38,6 +30,5 @@ class Book(db.Model):
         if not self.tags:
             return []
         return [t.strip() for t in self.tags.split(",") if t.strip()]
-
     def __str__(self):
         return self.title
