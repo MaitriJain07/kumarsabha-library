@@ -44,11 +44,3 @@ Open http://127.0.0.1:5000 — Admin: http://127.0.0.1:5000/admin/login
 | `/rare-books` | Rare books only |
 | `/search-suggestions` | Autocomplete (optional) |
 | `/admin` | Flask-Admin (login required) |
-
-## Contact email (optional)
-
-Set `MAIL_USERNAME`, `MAIL_PASSWORD`, and `LIBRARY_EMAIL` in `.env`. Without mail config, submissions are logged only.
-
-## Deployment
-
-Suitable for PythonAnywhere or Render: set `SECRET_KEY`, `DATABASE_URL` (PostgreSQL URL works with SQLAlchemy), and admin credentials via environment variables.
