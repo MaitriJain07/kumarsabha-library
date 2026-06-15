@@ -233,7 +233,15 @@ Detailed deployment guide coming after core features are finalised.
 
 ## 📄 License
 
-MIT License – feel free to use, modify, and distribute with attribution.
+This project is licensed under the **GNU General Public License v3 (GPL v3)**.
+
+This means:
+- Other libraries and cultural institutions can use and modify this code for free
+- Any improvements must be shared back with the community
+- Commercial use is not permitted – this code is for non-profit organizations only
+- Attribution to Shri Badabazar Kumar Sabha is required
+
+See LICENSE file for full details.
 
 ---
 
