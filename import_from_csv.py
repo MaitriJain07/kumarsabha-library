@@ -3,53 +3,68 @@ from app import create_app
 from app.extensions import db
 from app.models import Book, Category
 
-def import_books(csv_path="books_data.csv"):
+def import_books_enriched(csv_path="eng_data.csv"):
     app = create_app()
     with app.app_context():
-        # Get or create a default category (e.g., "General")
+        # Get or create default category
         default_cat = Category.query.filter_by(name="General").first()
         if not default_cat:
             default_cat = Category(name="General", slug="general")
             db.session.add(default_cat)
             db.session.commit()
+            print("Created 'General' category.")
 
         count = 0
-        with open(csv_path, newline='', encoding='utf-8') as f:
+        skipped = 0
+        with open(csv_path, newline='', encoding='utf-8-sig') as f:
             reader = csv.DictReader(f)
+            # Expected columns: PUSTAK, author, DATE, books-eng, author-eng
             for row in reader:
-                title = row.get('PUSTAK', '').strip()
-                author = row.get('author', '').strip()
+                title_hi = row.get('PUSTAK', '').strip()
+                author_hi = row.get('author', '').strip()
                 year_str = row.get('DATE', '').strip()
+                title_en = row.get('books-eng', '').strip()
+                author_en = row.get('author-eng', '').strip()
 
-                # Skip rows without title or author
-                if not title or not author:
+                # Skip rows without Hindi title or author
+                if not title_hi or not author_hi:
+                    skipped += 1
                     continue
 
-                # Parse year (handle "-----" or empty)
+                # Parse year
                 year = None
                 if year_str and year_str.isdigit():
                     year = int(year_str)
+                elif year_str and year_str.replace('-', '').isdigit():
+                    year = int(year_str.split('-')[0])  # handle "1981-82" -> 1981
 
-                # Avoid duplicates (simple check by title+author)
-                existing = Book.query.filter_by(title=title, author=author).first()
+                # Check duplicate
+                existing = Book.query.filter_by(title=title_hi, author=author_hi).first()
                 if existing:
-                    print(f"Skipping duplicate: {title} by {author}")
+                    print(f"Skipping duplicate: {title_hi} by {author_hi}")
+                    skipped += 1
                     continue
 
+                # Create new book
                 book = Book(
-                    title=title,
-                    author=author,
+                    title=title_hi,
+                    author=author_hi,
                     year=year,
                     category_id=default_cat.id,
-                    description="",          # you can add later
-                    tags="",                 # you can add later
-                    is_rare=False
+                    description="",
+                    tags="",
+                    is_rare=False,
+                    title_en=title_en if title_en else None,
+                    author_en=author_en if author_en else None
                 )
                 db.session.add(book)
                 count += 1
 
+                if count % 50 == 0:
+                    print(f"Imported {count} books...")
+
         db.session.commit()
-        print(f"✅ Imported {count} new books into the database.")
+        print(f"✅ Imported {count} new books (skipped {skipped}) into the database.")
 
 if __name__ == "__main__":
-    import_books()
+    import_books_enriched()

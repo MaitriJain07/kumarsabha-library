@@ -4,8 +4,6 @@
 {% block content %}
 <div class="container py-4">
   <h1 class="mb-4">पुस्तक सूची</h1>
-  <p class="text-muted">खोजें और फ़िल्टर करें — परिणाम बिना पृष्ठ रीलोड के अपडेट होंगे।</p>
-
   {% include "books/_filters.html" %}
   <div id="book-list">
     {% include "books/_book_grid.html" %}

@@ -24,7 +24,9 @@ class Book(db.Model):
     pdf_preview_url = db.Column(db.String(300))
     created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     category = db.relationship("Category", back_populates="books")
-
+    title_en = db.Column(db.String(200))
+    author_en = db.Column(db.String(100))
+    
     @property
     def tag_list(self):
         if not self.tags:
