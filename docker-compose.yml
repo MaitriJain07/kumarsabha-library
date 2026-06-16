@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+  web:
+    build: .
+    container_name: kumar-web
+    ports:
+      - "8080:5000"
+    volumes:
+      - /home/ubuntu/kumarsabha-data:/app/instance
+    restart: always
