@@ -1,12 +1,12 @@
 # 📚 Shri Badabazar Kumar Sabha Library
 
 [![Flask](https://img.shields.io/badge/Flask-2.3+-black)](https://flask.palletsprojects.com/)
-[![Python](https://img.shields.io/badge/Python-3.13.1-blue)](https://python.org/)
+[![Python](https://img.shields.io/badge/Python-3.11-slim)](https://python.org/)
 [![SQLite](https://img.shields.io/badge/SQLite-3-blue)](https://sqlite.org/)
 [![Bootstrap](https://img.shields.io/badge/Bootstrap-5-purple)](https://getbootstrap.com/)
 [![HTMX](https://img.shields.io/badge/HTMX-1.9+-green)](https://htmx.org/)
 [![Docker](https://img.shields.io/badge/Docker-Ready-cyan)](https://docker.com/)
-[![License](https://img.shields.io/badge/license-MIT-orange)](LICENSE)
+[![AWS](https://img.shields.io/badge/AWS-EC2-orange)](https://aws.amazon.com/)
 
 A bilingual, searchable library catalogue for a historic 1918 library in Kolkata. Built from scratch with live search, responsive design, and smart Hindi-to-Hinglish transliteration.
 
@@ -21,17 +21,16 @@ The **Shri Badabazar Kumar Sabha Pustakalaya** (established 1918) had:
 - No searchable book catalogue
 - Historical content scattered across old pages
 - No way for staff to manage or update book records
-- 500+ books only available in scanned paper registers
+- 27,000+ books only available in scanned paper registers
 
 ## ✨ The Solution
 
 A modern, bilingual web platform that:
 - Provides a searchable, filterable book catalogue (title, author, category, year)
-- Implements smart Hindi-to-Hinglish transliteration – so searching "kela prasad" finds "केला प्रसाद" without broken Google Translate nonsense
+- Implements smart Hindi-to-Hinglish transliteration
 - Displays books with detailed pages, related books, and rare book badges
 - Restores historical content (library history, award lists, office bearers 1987–2016)
 - Works perfectly on mobile, tablet, and desktop
-- Built with clean, version-controlled code (30+ Git commits showing iterative development)
 
 ---
 
@@ -47,8 +46,8 @@ A modern, bilingual web platform that:
 
 ### For Library Staff (In Progress)
 - 🔐 Secure Admin Login (Flask-Login)
-- 📚 Custom Admin Dashboard – add/edit/delete books and categories (under development – 0-20% complete)
-- 📤 Bulk Excel Upload – import 100+ books at once (planned)
+- 📚 Custom Admin Dashboard – add/edit/delete books and categories
+- 📤 Bulk Excel Upload – import 1000+ books at once (planned)
 - 🖼️ Photo Gallery Management – upload and display library events (planned)
 
 ---
@@ -57,53 +56,96 @@ A modern, bilingual web platform that:
 
 | Layer | Technology |
 |-------|-----------|
-| Backend | Flask 2.3+ (Python 3.13.1) |
+| Backend | Flask 2.3+ (Python 3.11+) |
 | Database | SQLite with SQLAlchemy ORM |
 | Frontend | Bootstrap 5, Jinja2, HTMX, Alpine.js |
 | Authentication | Flask-Login |
 | Search & Filters | Custom Python logic + Hinglish transliteration |
-| Deployment | Docker + AWS (deployment coming soon) |
+| Containerization | Docker + Docker Compose |
+| Cloud Deployment | AWS EC2 (t3.micro, Ubuntu 26.04 LTS) |
 | Version Control | Git + GitHub |
 
 ---
+## 🐳 Docker & AWS Deployment
+
+### Docker Deployment (Single Container)
+```bash
+docker build -t kumarsabha-library .
+docker run -d -p 80:5000 --name kumar-app -v /home/ubuntu/kumarsabha-data:/app/instance kumarsabha-library
+```
+### Docker Compose (Multi-Container Orchestration)
+```bash
+docker compose up -d
+docker compose ps
+```
+### Live Deployments
+- Docker (Port 80): http://52.66.235.213 — Single-container deployment
+- Docker Compose (Port 8080): http://52.66.235.213:8080 — Multi-container orchestration demo
+### AWS Configuration
+- EC2 Instance: t3.micro (Ubuntu 22.04)
+- Security Groups: SSH (22), HTTP (80), Custom (8080)
+- Persistent Volume: SQLite database mounted on host
+- Container Lifecycle: Managed with Docker + Docker Compose
 
 ## 📂 Project Structure
-
 ```
 kumarsabha-library/
 ├── app/
-│   ├── __init__.py              # Flask app factory
-│   ├── models.py                # Book & Category models
-│   ├── auth.py                  # Login logic (Flask-Login)
-│   ├── forms.py                 # WTForms
 │   ├── blueprints/
-│   │   ├── main.py              # Homepage, history, awards
-│   │   └── books.py             # Book catalogue, search, filters
+│   │   ├── __init__.py
+│   │   ├── books.py
+│   │   └── main.py
 │   ├── services/
-│   │   ├── search.py            # Search logic + Hinglish transliteration
-│   │   └── filters.py           # Category & year filters
+│   │   ├── __init__.py
+│   │   └── books.py
 │   ├── static/
-│   │   ├── css/
-│   │   ├── js/
-│   │   └── images/
-│   └── templates/
-│       ├── base.html
-│       ├── home.html
-│       ├── books/
-│       └── partials/
+│   │   └── css/
+│   │       └── style.css
+│   ├── templates/
+│   │   ├── auth/
+│   │   │   └── login.html
+│   │   ├── books/
+│   │   │   ├── _book_card.html
+│   │   │   ├── _book_grid.html
+│   │   │   ├── _filters.html
+│   │   │   ├── _suggestions.html
+│   │   │   ├── catalogue.html
+│   │   │   ├── detail.html
+│   │   │   └── rare.html
+│   │   ├── main/
+│   │   │   └── index.html
+│   │   ├── pages/
+│   │   │   ├── activities.html
+│   │   │   ├── contact.html
+│   │   │   ├── executive_committee.html
+│   │   │   ├── history.html
+│   │   │   ├── introduction.html
+│   │   │   ├── photo_gallery.html
+│   │   │   └── publications.html
+│   │   ├── partials/
+│   │   │   ├── footer.html
+│   │   │   └── navbar.html
+│   │   └── base.html
+│   ├── __init__.py
+│   ├── admin.py
+│   ├── auth.py
+│   ├── extensions.py
+│   ├── forms.py
+│   └── models.py
+├── .github/
+│   └── workflows/
+│       └── deploy.yml
 ├── instance/
-│   └── kumarsabha.db            # SQLite database (ignored by Git)
-├── .dockerignore
-├── Dockerfile                   # Docker setup for AWS deployment
+├── Dockerfile
 ├── docker-compose.yml
-├── config.py                    # Environment variables
+├── categorize_books.py
+├── config.py
+├── eng_data.csv
+├── import_from_csv.py
 ├── requirements.txt
-├── run.py                       # Entry point
-├── import_books.py              # Script to populate DB from CSV
-├── books_data.csv               # Bilingual book data (500+ rows)
+├── run.py
 └── README.md
 ```
-
 ---
 
 ## 🧪 Getting Started (Local Development)
@@ -124,14 +166,9 @@ cd kumarsabha-library
 
 ```bash
 python -m venv venv
-source venv/bin/activate
-```
+source venv/bin/activate  #On Windows: venv\Scripts\activate
 
-On Windows:
-```bash
-venv\Scripts\activate
 ```
-
 ### 3. Install Dependencies
 
 ```bash
@@ -154,94 +191,48 @@ Generate a secret key:
 python -c "import secrets; print(secrets.token_hex(32))"
 ```
 
-### 5. Create Database & Tables
-
+### 5. Run the Application
 ```bash
-flask shell
+python run.py
 ```
-
-Inside the Flask shell:
-```python
-from app import create_app, db
-app = create_app()
-with app.app_context():
-    db.create_all()
-    print("Database created!")
-exit()
-```
+The app will create the database automatically on first run.
 
 ### 6. Import Book Data
-
 ```bash
-python import_books.py
+python import_from_csv.py
+python categorize_books.py
 ```
 
-### 7. Run the App
-
-```bash
-flask run
-```
-
-Visit http://127.0.0.1:5000
+### 7. Visit the App
+- Open http://127.0.0.1:5000 in your browser.
 
 ---
+## 📈 Roadmap
 
-## 🐳 Docker & AWS Deployment (Coming Soon)
+**Phase 1 (Complete):**
+- ✅ Live searchable catalogue (300+ books digitized)
+- ✅ Docker + AWS EC2 deployment
+- ✅ Docker Compose multi-container orchestration
+- ✅ Linux system monitoring with cron automation
 
-This project is Docker-ready for scalable deployment:
+### Phase 2:
 
-```bash
-docker build -t kumarsabha-library .
-docker run -p 5000:5000 kumarsabha-library
-```
-
-**AWS Deployment Plan:**
-- Push image to AWS ECR (Elastic Container Registry)
-- Deploy on ECS (Elastic Container Service) or App Runner
-- Use RDS for PostgreSQL (replacing SQLite in production)
-- CloudFront CDN for static assets
-
-Detailed deployment guide coming after core features are finalised.
-
----
-
-## 📈 Roadmap (What's Next)
-
-**Phase 2 (In Progress):**
-- Custom admin dashboard (currently being built)
+- Full admin dashboard with CRUD operations
+- **Bulk import of remaining 27,000+ books from digitized registers**
 - Bulk Excel upload for staff
 - Photo gallery for events
 
-**Phase 3 (Planned):**
+### Phase 3:
 - Executive committee dynamic pages
 - Contact form with email integration
 - Full-text search with SQLite FTS5
-- User analytics & admin reports
-
----
-
-## 🤔 Why This Project Stands Out
-
-1. Real-world problem – modernising a 1918 library with digitised collection
-2. Bilingual intelligence – Hindi-to-Hinglish transliteration without breaking Google Translate
-3. Clean code & Git history – 30+ commits showing iterative development
-4. Scalable architecture – Flask app factory, modular blueprints, Docker-ready
-5. Responsive & accessible – works perfectly on all devices
-6. Portfolio-ready – built from requirements to local completion (deployment coming soon)
+- Advanced analytics for rare books and user engagement
 
 ---
 
 ## 📄 License
 
 This project is licensed under the **GNU General Public License v3 (GPL v3)**.
-
-This means:
-- Other libraries and cultural institutions can use and modify this code for free
-- Any improvements must be shared back with the community
-- Commercial use is not permitted – this code is for non-profit organizations only
-- Attribution to Shri Badabazar Kumar Sabha is required
-
-See LICENSE file for full details.
 
 ---
 
@@ -254,6 +245,6 @@ B.Tech CSE + IIT Madras BS in Data Science
 
 ---
 
-This project was built from scratch during a summer internship – from requirements gathering to functional prototype, with clean Git history and deployed code coming soon.
+This project was built from scratch during a summer internship – from requirements gathering to functional prototype, with clean Git history and deployed code.
 
-Last updated: June 2026
+Last updated: June 16, 2026
