@@ -11,9 +11,9 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     ADMIN_USERNAME = os.environ.get("ADMIN_USERNAME", "admin")
     ADMIN_PASSWORD_HASH = os.environ.get("ADMIN_PASSWORD_HASH", "")
-    #MAIL_SERVER = os.environ.get("MAIL_SERVER")
-    #MAIL_PORT = int(os.environ.get("MAIL_PORT", 587))
-    #MAIL_USE_TLS = os.environ.get("MAIL_USE_TLS", "true").lower() == "true"
-    #MAIL_USERNAME = os.environ.get("MAIL_USERNAME")
-    #MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD")
-    #LIBRARY_EMAIL = os.environ.get("LIBRARY_EMAIL", "library@kumarsabha.com")
+    MAIL_SERVER = os.environ.get("MAIL_SERVER")
+    MAIL_PORT = int(os.environ.get("MAIL_PORT", 587))
+    MAIL_USE_TLS = os.environ.get("MAIL_USE_TLS", "true").lower() == "true"
+    MAIL_USERNAME = os.environ.get("MAIL_USERNAME")
+    MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD")
+    LIBRARY_EMAIL = os.environ.get("LIBRARY_EMAIL", "library@kumarsabha.com")

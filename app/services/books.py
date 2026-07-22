@@ -84,13 +84,13 @@ def filter_books(args=None, rare_only=False):
         # Apply filter using OR of all conditions
         q = q.filter(or_(*conditions))
 
-    if category and category != 'all':
+    if category and category != 'all' and category.isdigit():
         q = q.filter(Book.category_id == int(category))
 
-    if year_min:
+    if year_min and year_min.isdigit():
         q = q.filter(Book.year >= int(year_min))
 
-    if year_max:
+    if year_max and year_max.isdigit():
         q = q.filter(Book.year <= int(year_max))
 
     return q.order_by(Book.title).all()

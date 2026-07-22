@@ -7,3 +7,9 @@ instance/
 venv/
 .pytest_cache/
 .mypy_cache/
+
+1_core_python.txt
+2_routes_services.txt
+3_docker_config.txt
+4_github_actions.txt
+5_templates.txt

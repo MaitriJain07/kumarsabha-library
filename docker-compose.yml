@@ -3,8 +3,9 @@ services:
   web:
     build: .
     container_name: kumar-web
+    env_file: .env
     ports:
       - "8080:5000"
     volumes:
-      - /home/ubuntu/kumarsabha-data:/app/instance
+      - ./data:/app/instance
     restart: always
